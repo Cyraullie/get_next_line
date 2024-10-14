@@ -6,8 +6,11 @@
 /*   By: cgoldens <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:12 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/14 14:18:14 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:37:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_INE_H
 
+#endif

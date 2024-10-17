@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:17:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/17 16:13:48 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:33:01 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,19 @@ char	*get_next_line(int fd)
 	if (!l_str)
 		l_str = ft_strdup("");
 	l_str = ft_read_to_left_str(fd, l_str);
+	if (!l_str)
+	{
+		free(l_str);
+		l_str = NULL;
+		return (NULL);
+	}
 	line = ft_get_line(l_str);
 	l_str = ft_new_left_str(l_str);
+	if (!line)
+	{
+		free(l_str);
+		l_str = NULL;
+	}
 	return (line);
 }
 /*

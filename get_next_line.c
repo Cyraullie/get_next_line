@@ -6,122 +6,123 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:17:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/17 16:33:01 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:25:34 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_get_line(char *l_str)
+char	*ft_free(char *buffer, char *buf)
 {
-	int		i;
-	char	*s;
+	char	*temp;
 
-	i = 0;
-	if (!l_str)
-		return (NULL);
-	while (l_str[i] && l_str[i] != '\n')
-		i++;
-	s = (char *)malloc(sizeof(char) * (i + 2));
-	if (!s)
-	{
-		free(s);
-		return (NULL);
-	}
-	i = 0;
-	while (l_str[i] && l_str[i] != '\n')
-	{
-		s[i] = l_str[i];
-		i++;
-	}
-	if (l_str[i] == '\n')
-	{
-		s[i] = l_str[i];
-		i++;
-	}
-	s[i] = '\0';
-	return (s);
+	if (!buffer)
+		buffer = "";
+	if (!buf)
+		buf = "";
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
 }
 
-char	*ft_new_left_str(char *l_str)
+char	*ft_next(char *buffer)
 {
 	int		i;
 	int		j;
-	char	*s;
+	char	*line;
 
 	i = 0;
-	if (!l_str)
-	{
-		free(l_str);
-		return (NULL);
-	}
-	while (l_str[i] && l_str[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	s = (char *)malloc(sizeof(char) * (ft_strlen(l_str) - i + 1));
-	if (!s)
+	if (!buffer[i])
 	{
-		free(s);
+		free(buffer);
 		return (NULL);
 	}
+	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
 	i++;
 	j = 0;
-	while (l_str[i])
-		s[j++] = l_str[i++];
-	s[j] = '\0';
-	free(l_str);
-	return (s);
+	while (buffer[i])
+		line[j++] = buffer[i++];
+	free(buffer);
+	return (line);
 }
 
-char	*ft_read_to_left_str(int fd, char *l_str)
+char	*ft_line(char *buffer)
 {
-	char	*b;
-	int		rd_b;
+	char	*line;
+	int		i;
 
-	b = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!b)
-	{
-		free(b);
+	i = 0;
+	if (!buffer[i])
 		return (NULL);
-	}
-	rd_b = 1;
-	while (!ft_strchr(l_str, '\n') && rd_b != 0)
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] == '\n')
+		line = ft_calloc(i + 2, sizeof(char));
+	else
+		line = ft_calloc(i + 1, sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
 	{
-		rd_b = read(fd, b, BUFFER_SIZE);
-		if (rd_b == -1)
+		line[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] && buffer[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
+}
+
+char	*read_file(int fd, char *res)
+{
+	char	*buffer;
+	int		byte_read;
+
+	if (!res)
+		res = ft_calloc(1, 1);
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	byte_read = 1;
+	while (byte_read > 0)
+	{
+		byte_read = read(fd, buffer, BUFFER_SIZE);
+		if (byte_read == -1)
 		{
-			free(b);
+			free(buffer);
+			if (res)
+				free(res);
 			return (NULL);
 		}
-		b[rd_b] = '\0';
-		l_str = ft_strjoin(l_str, b);
+		buffer[byte_read] = 0;
+		res = ft_free(res, buffer);
+		if (ft_strchr(buffer, '\n'))
+			break ;
 	}
-	free(b);
-	return (l_str);
+	free(buffer);
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
+	static char	*buffer;
 	char		*line;
-	static char	*l_str;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || !fd)
-		return (NULL);
-	if (!l_str)
-		l_str = ft_strdup("");
-	l_str = ft_read_to_left_str(fd, l_str);
-	if (!l_str)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(l_str);
-		l_str = NULL;
+		if (buffer)
+		{
+			free(buffer);
+			buffer = NULL;
+		}
 		return (NULL);
 	}
-	line = ft_get_line(l_str);
-	l_str = ft_new_left_str(l_str);
-	if (!line)
-	{
-		free(l_str);
-		l_str = NULL;
-	}
+	buffer = read_file(fd, buffer);
+	if (!buffer)
+		return (NULL);
+	line = ft_line(buffer);
+	buffer = ft_next(buffer);
 	return (line);
 }
 /*
@@ -130,9 +131,12 @@ int	main(void)
 	char	*line;
 	int		i;
 	int		fd1;
+	char	*buffer;
 
-	fd1 = open("tests/test4.txt", O_RDONLY);
+	buffer = NULL;
+	fd1 = open("tests/test3.txt", O_RDONLY);
 	printf("%d\n", fd1);
+	printf("%zd\n", read(fd1, buffer, 1));
 	i = 1;
 	while (i < 7)
 	{

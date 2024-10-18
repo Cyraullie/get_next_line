@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:12 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/17 16:02:08 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:05:06 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-/*# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif*/
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
 
 char	*get_next_line(int fd);
-char	*ft_read_to_left_str(int fd, char *l_str);
-char	*ft_get_line(char *l_str);
-char	*ft_new_left_str(char *l_str);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(char *s, int c);
-size_t	ft_strlen(char *s);
-char	*ft_strdup(char *src);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *string, int searchedChar );
+
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t elementCount, size_t elementSize);
+
+size_t	ft_strlen(const char *theString);
+
 #endif

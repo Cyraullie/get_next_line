@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:22 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/18 15:17:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:43:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 {
 	char	*res;
 
+	if (elementCount != 0 && elementSize != 0
+		&& (elementCount > SIZE_MAX / elementSize))
+		return (NULL);
 	res = malloc(elementSize * elementCount);
 	if (!res)
 		return (NULL);
@@ -77,10 +80,15 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 	return (res);
 }
 
-size_t	ft_strlen(const char *theString)
+size_t	ft_strlen(char *theString)
 {
 	int	i;
 
+	if (!theString)
+	{
+		free(theString);
+		return (0);
+	}
 	i = 0;
 	while (theString[i])
 		i++;

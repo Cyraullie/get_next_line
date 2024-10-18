@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:12 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/18 13:05:06 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:43:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ char	*ft_strchr(const char *string, int searchedChar );
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t elementCount, size_t elementSize);
 
-size_t	ft_strlen(const char *theString);
+size_t	ft_strlen(char *theString);
 
 #endif

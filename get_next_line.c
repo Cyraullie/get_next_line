@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:17:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/21 15:38:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:11:56 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ char	*read_file(int fd, char *res)
 		if (byte_read == -1)
 		{
 			free(buffer);
-			free(res);
+			if (res)
+				free(res);
 			return (NULL);
 		}
 		buffer[byte_read] = 0;

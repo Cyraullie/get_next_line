@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:22 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/21 15:39:48 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:43:42 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	if (!s1 && !s2)
-		return (NULL);
 	if (!s1)
 		s1 = "";
 	if (!s2)
@@ -70,9 +68,14 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 {
 	char	*res;
 
+	if (!elementCount || !elementSize)
+		return (NULL);
 	res = malloc(elementSize * elementCount);
 	if (!res)
+	{
+		free(res);
 		return (NULL);
+	}
 	ft_bzero(res, elementSize * elementCount);
 	return (res);
 }

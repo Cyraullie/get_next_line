@@ -6,13 +6,13 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:22 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/21 12:43:26 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:17:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		sizetotal;
 	char	*res;
@@ -70,9 +70,6 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 {
 	char	*res;
 
-	if (elementCount != 0 && elementSize != 0
-		&& (elementCount > SIZE_MAX / elementSize))
-		return (NULL);
 	res = malloc(elementSize * elementCount);
 	if (!res)
 		return (NULL);
@@ -80,15 +77,10 @@ void	*ft_calloc(size_t elementCount, size_t elementSize)
 	return (res);
 }
 
-size_t	ft_strlen(char *theString)
+size_t	ft_strlen(const char *theString)
 {
 	int	i;
 
-	if (!theString)
-	{
-		free(theString);
-		return (0);
-	}
 	i = 0;
 	while (theString[i])
 		i++;

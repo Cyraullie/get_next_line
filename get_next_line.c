@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:17:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/18 16:40:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:25:34 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ char	*ft_free(char *buffer, char *buf)
 {
 	char	*temp;
 
-	if (!buffer || !buf)
-		return (NULL);
 	if (!buffer)
 		buffer = "";
 	if (!buf)
@@ -34,11 +32,6 @@ char	*ft_next(char *buffer)
 	char	*line;
 
 	i = 0;
-	if (!buffer)
-	{
-		free(buffer);
-		return (NULL);
-	}
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (!buffer[i])
@@ -119,7 +112,10 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		if (buffer)
+		{
 			free(buffer);
+			buffer = NULL;
+		}
 		return (NULL);
 	}
 	buffer = read_file(fd, buffer);

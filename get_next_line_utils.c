@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:18:22 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/18 15:17:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:39:48 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	i = -1;
 	if (!s1 && !s2)
 		return (NULL);
 	if (!s1)
@@ -30,6 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	res = malloc(sizeof(char) * (sizetotal + 1));
 	if (!res)
 		return (NULL);
+	i = -1;
 	while (s1[++i] != 0)
 		res[i] = s1[i];
 	j = 0;

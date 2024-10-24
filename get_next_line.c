@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:17:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2024/10/21 16:11:56 by cgoldens         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:37:21 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	main(void)
 	char	*buffer;
 
 	buffer = NULL;
-	fd1 = open("tests/test3.txt", O_RDONLY);
+	fd1 = open("tests/test.txt", O_RDONLY);
 	printf("%d\n", fd1);
 	printf("%zd\n", read(fd1, buffer, 1));
 	i = 1;
